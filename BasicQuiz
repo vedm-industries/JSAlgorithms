@@ -1,0 +1,78 @@
+//In this example, the quiz consists of an array of objects representing each question. Each question has a question statement, an array of multiple-choice options, 
+//and the correct answer. The quiz is initialized by calling the initializeQuiz() function, which displays the first question. The user can select an answer and click the 
+//"Next" button to move to the next question. The score is updated based on the user's responses. Once all questions have been answered, the final score is displayed.
+
+
+
+
+
+// HTML
+<body>
+  <div class="container">
+    <h1>Quiz Game</h1>
+    <div id="questionContainer"></div>
+    <button id="nextButton">Next</button>
+    <div id="scoreContainer">Score: <span id="score">0</span></div>
+  </div>
+</body>
+
+// JavaScript
+const questions = [
+  {
+    question: 'What is the capital of France?',
+    options: ['Paris', 'Madrid', 'London', 'Rome'],
+    answer: 'Paris'
+  },
+  {
+    question: 'Which planet is known as the Red Planet?',
+    options: ['Mars', 'Venus', 'Jupiter', 'Saturn'],
+    answer: 'Mars'
+  },
+  {
+    question: 'What is the largest ocean in the world?',
+    options: ['Pacific Ocean', 'Atlantic Ocean', 'Indian Ocean', 'Arctic Ocean'],
+    answer: 'Pacific Ocean'
+  },
+  {
+    question: 'Who painted the Mona Lisa?',
+    options: ['Leonardo da Vinci', 'Pablo Picasso', 'Vincent van Gogh', 'Michelangelo'],
+    answer: 'Leonardo da Vinci'
+  }
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+// Initialize the quiz
+function initializeQuiz() {
+  displayQuestion(currentQuestion);
+  document.getElementById('nextButton').addEventListener('click', nextQuestion);
+}
+
+// Display the current question
+function displayQuestion(index) {
+  const questionContainer = document.getElementById('questionContainer');
+  const question = questions[index];
+
+  questionContainer.innerHTML = `
+    <h2>${question.question}</h2>
+    <ul>
+      ${question.options
+        .map(
+          option => `
+            <li>
+              <input type="radio" name="answer" value="${option}">
+              ${option}
+            </li>
+          `
+        )
+        .join('')}
+    </ul>
+  `;
+}
+
+// Move to the next question
+function nextQuestion() {
+  const selectedOption = document.querySelector('input[name="answer"]:checked');
+  const scoreContainer = document.getElementById('score');
+
