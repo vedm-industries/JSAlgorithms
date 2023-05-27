@@ -1,0 +1,36 @@
+// gets random jokes from the Official Joke API, displays it on the page when button clicked. 
+// HTML
+<body>
+  <div class="container">
+    <h1>Joke Generator</h1>
+    <button id="jokeButton">Get Joke</button>
+    <div id="jokeDisplay"></div>
+  </div>
+</body>
+
+// JavaScript
+// Event listener for the joke button
+document.getElementById('jokeButton').addEventListener('click', getJoke);
+
+// Function to fetch a random joke from the API
+function getJoke() {
+  fetch('https://official-joke-api.appspot.com/random_joke')
+    .then(response => response.json())
+    .then(data => {
+      const setup = data.setup;
+      const punchline = data.punchline;
+      displayJoke(setup, punchline);
+    })
+    .catch(error => {
+      console.log('Error:', error);
+    });
+}
+
+// Function to display the joke on the page
+function displayJoke(setup, punchline) {
+  const jokeDisplay = document.getElementById('jokeDisplay');
+  jokeDisplay.innerHTML = `
+    <p>${setup}</p>
+    <p><em>${punchline}</em></p>
+  `;
+}
