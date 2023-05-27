@@ -1,0 +1,58 @@
+//This code allows users to add tasks by entering text in the input field and clicking the "Add Task" button. 
+//The added tasks are displayed as list items, and each task has a delete button associated with it. Clicking the delete button removes the task. Additionally, 
+//clicking on a task item marks it as completed, and it can be toggled back to an active state by clicking on it again.
+// HTML
+<body>
+  <div class="container">
+    <h1>Task Manager</h1>
+    <input type="text" id="taskInput" placeholder="Enter a task">
+    <button id="addButton">Add Task</button>
+    <ul id="taskList"></ul>
+  </div>
+</body>
+
+// JavaScript
+// Event listener for the add button
+document.getElementById('addButton').addEventListener('click', addTask);
+
+// Event listener for the task list
+document.getElementById('taskList').addEventListener('click', handleTaskAction);
+
+// Function to add a new task
+function addTask() {
+  const taskInput = document.getElementById('taskInput');
+  const taskText = taskInput.value.trim();
+
+  if (taskText !== '') {
+    const taskItem = createTaskItem(taskText);
+    document.getElementById('taskList').appendChild(taskItem);
+    taskInput.value = '';
+  }
+}
+
+// Function to create a new task item
+function createTaskItem(taskText) {
+  const taskItem = document.createElement('li');
+  taskItem.textContent = taskText;
+  taskItem.classList.add('task');
+
+  const deleteButton = document.createElement('button');
+  deleteButton.textContent = 'Delete';
+  deleteButton.classList.add('delete-button');
+
+  taskItem.appendChild(deleteButton);
+
+  return taskItem;
+}
+
+// Function to handle task actions (delete and complete)
+function handleTaskAction(event) {
+  const target = event.target;
+
+  if (target.classList.contains('delete-button')) {
+    const taskItem = target.parentElement;
+    taskItem.remove();
+  } else if (target.classList.contains('task')) {
+    target.classList.toggle('completed');
+  }
+}
